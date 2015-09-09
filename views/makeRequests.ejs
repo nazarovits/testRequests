@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+<h1><%= title %></h1>
+<p>Welcome to <%= title %></p>
+<p><a href="/"> Home </a></p>
+
+<form action="/makeRequests" method="POST">
+
+    <table>
+        <tr>
+            <td><label for="host">host </label></td>
+            <!--<td><input type="text" name="host" value="http://localhost:8850"/></td>-->
+            <td><input type="text" name="host" value="http://192.168.88.250:8850"/></td>
+        </tr>
+
+        <!--<tr>
+            <td><label for="authUrl">Auth url </label></td>
+            <td><input type="text" name="authUrl" value="/signIn"/></td>
+        </tr>
+        <tr>
+            <td><label for="authMethod">Auth method </label></td>
+            <td><input type="text" name="authMethod" value="POST"/></td>
+        </tr>
+        <tr>
+            <td><label for="email">email</label></td>
+            <td><input type="text" name="email" value="mcinnescooper@legalapp.com"/></td>
+        </tr>
+        <tr>
+            <td><label for="password">password</label></td>
+            <td><input type="password" name="password" value="1q2w3e4r"/></td>
+        </tr>
+        <tr></tr>-->
+        <tr>
+            <td><label for="url">url </label></td>
+            <td><input type="text" name="url" value="/documents/signAndSend"/></td>
+        </tr>
+        <tr>
+            <td><label for="count">count </label></td>
+            <td><input type="text" name="count" value="5"/></td>
+        </tr>
+        <tr>
+            <td><label for="method">method </label></td>
+            <td><input type="text" name="method" value="POST"/></td>
+        </tr>
+        <tr>
+            <td><label for="type">Type </label></td>
+            <td>
+            <input type="radio" name="type" value="parallel" checked="checked"> <label>parallel</label>
+            <input type="radio" name="type" value="series"> <label>series</label>
+            </td>
+
+        </tr>
+        <tr></tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" name="" value="Let's go ..."/></td>
+        </tr>
+    </table>
+
+    <% if (results) {%>
+    <h2>Results</h2>
+    <table>
+        <tr>
+            <th>Nom</th>
+            <th>Status</th>
+            <th>Time</th>
+            <th>Error</th>
+        </tr>
+
+        <%  var count = 0; %>
+        <% results.forEach(function (item) {
+            var timeDiff = item.end - item.start;
+            var color = 'black';
+
+            count++;
+
+            if ((200 < timeDiff) && (timeDiff < 350)) {
+                color = 'orange';
+            }
+            if ( timeDiff > 350) {
+                color = 'red';
+            }
+        %>
+
+            <tr>
+                <td><%= count %></td>
+                <td><%= item.status %></td>
+                <td style="color:<%= color %>;"><%= timeDiff%>  ms</td>
+                <td><%= item.error %></td>
+            </tr>
+        <% }); %>
+    </table>
+    <% }%>
+
+</form>
+
+</body>
+</html>
